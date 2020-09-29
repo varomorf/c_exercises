@@ -5,12 +5,7 @@
 #ifndef AGENDA_ARRAYAGENDA_H
 #define AGENDA_ARRAYAGENDA_H
 
-typedef struct AgendaEntry {
-    char *name;
-    char *surname;
-    char *id;
-    unsigned short age;
-} AGENDA_ENTRY;
+#include "agendaCommon.h"
 
 typedef struct ARRAY_AGENDA {
     AGENDA_ENTRY *entries;
