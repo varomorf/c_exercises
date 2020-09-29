@@ -12,4 +12,6 @@ typedef struct AgendaEntry {
     unsigned short age;
 } AGENDA_ENTRY;
 
+AGENDA_ENTRY createAgendaEntry(char *name, char *surname, char *id, unsigned short age);
+
 #endif //AGENDA_AGENDACOMMON_H

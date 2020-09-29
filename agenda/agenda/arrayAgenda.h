@@ -13,8 +13,6 @@ typedef struct ARRAY_AGENDA {
     unsigned int entryCount;
 } ARRAY_AGENDA;
 
-AGENDA_ENTRY createAgendaEntry(char *name, char *surname, char *id, unsigned short age);
-
 void addEntry(ARRAY_AGENDA *agenda, AGENDA_ENTRY entry);
 
 ARRAY_AGENDA* createArrayAgenda(int initialSize);

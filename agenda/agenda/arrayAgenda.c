@@ -7,7 +7,7 @@
 #include <string.h>
 #include "arrayAgenda.h"
 
-static const ARRAY_AGENDA_INCR = 1;
+static const int ARRAY_AGENDA_INCR = 1;
 
 void listEntries(const AGENDA_ENTRY *entries, unsigned int entryCount);
 
@@ -49,17 +49,6 @@ int ageComparator(const void *p1, const void *p2) {
     AGENDA_ENTRY *entry2 = (AGENDA_ENTRY *) p2;
 
     return entry1->age - entry2->age;
-}
-
-AGENDA_ENTRY createAgendaEntry(char *name, char *surname, char *id, unsigned short age) {
-    AGENDA_ENTRY entry;
-
-    entry.name = name;
-    entry.surname = surname;
-    entry.id = id;
-    entry.age = age;
-
-    return entry;
 }
 
 void addEntry(ARRAY_AGENDA *agenda, const AGENDA_ENTRY entry) {
