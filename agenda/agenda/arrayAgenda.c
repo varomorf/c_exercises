@@ -13,6 +13,7 @@ void listEntries(const AGENDA_ENTRY *entries, unsigned int entryCount);
 
 char *getFullName(AGENDA_ENTRY *entry) {
     char *fullName = malloc(strlen(entry->name) + strlen(entry->surname) + 2);
+    fullName[0] = '\0';
 
     fullName = strcat(fullName, entry->name);
     fullName = strcat(fullName, " ");
