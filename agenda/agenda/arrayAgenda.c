@@ -4,7 +4,6 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
 #include "arrayAgenda.h"
 
 static const int ARRAY_AGENDA_INCR = 1;

@@ -18,7 +18,9 @@ void executeForList();
 int main() {
     printf("Hello and welcome to Zapienda! The \"AI-powered\" agenda.\n\n");
 
+    printf("**** ARRAY VERSION ****\n\n");
     executeForArray();
+    printf("**** LINKED LIST VERSION ****\n\n");
     executeForList();
 
     return 0;
@@ -45,7 +47,7 @@ void executeForList() {
     addListEntry(agenda, createAgendaEntry("Pablo", "Bravo", "12345680A", 42));
     addListEntry(agenda, createAgendaEntry("Migui", "The cat", "12345681A", 1));
 
-    listAgendaAsIs(agenda);
-    listAgendaAlphabetically(agenda);
-    listAgendaByAge(agenda);
+    listListAgendaAsIs(agenda);
+    listListAgendaAlphabetically(agenda);
+    listListAgendaByAge(agenda);
 }
