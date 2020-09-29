@@ -29,7 +29,12 @@ int fullNameComparator(const void *p1, const void *p2) {
     char *fullName1 = getFullName(entry1);
     char *fullName2 = getFullName(entry2);
 
-    return strcmp(fullName1, fullName2);
+    int ret = strcmp(fullName1, fullName2);
+
+    free(fullName1);
+    free(fullName2);
+
+    return ret;
 }
 
 void listWithComparator(ARRAY_AGENDA * agenda, void * comparator) {

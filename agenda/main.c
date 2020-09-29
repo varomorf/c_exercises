@@ -1,5 +1,9 @@
 #include <stdio.h>
 #include "agenda/arrayAgenda.h"
+#include "agenda/linkedListAgenda.h"
+
+void executeForArray();
+void executeForList();
 
 /*
  * A ver q casi me pasa, que te parece facer en C un programilla de agenda.
@@ -14,6 +18,13 @@
 int main() {
     printf("Hello and welcome to Zapienda! The \"AI-powered\" agenda.\n\n");
 
+    executeForArray();
+    executeForList();
+
+    return 0;
+}
+
+void executeForArray() {
     ARRAY_AGENDA *agenda = createArrayAgenda(2);
 
     addEntry(agenda, createAgendaEntry("Alvaro", "Fernández González", "12345678A", 35));
@@ -24,6 +35,17 @@ int main() {
     listAgendaAsIs(agenda);
     listAgendaAlphabetically(agenda);
     listAgendaByAge(agenda);
+}
 
-    return 0;
+void executeForList() {
+    LIST_AGENDA *agenda = createLinkedListAgenda();
+
+    addListEntry(agenda, createAgendaEntry("Alvaro", "Fernández González", "12345678A", 35));
+    addListEntry(agenda, createAgendaEntry("Sara", "Zapico Fernández", "12345679A", 33));
+    addListEntry(agenda, createAgendaEntry("Pablo", "Bravo", "12345680A", 42));
+    addListEntry(agenda, createAgendaEntry("Migui", "The cat", "12345681A", 1));
+
+    listAgendaAsIs(agenda);
+    listAgendaAlphabetically(agenda);
+    listAgendaByAge(agenda);
 }
