@@ -9,35 +9,6 @@
 
 static const int ARRAY_AGENDA_INCR = 1;
 
-void listEntries(const AGENDA_ENTRY *entries, unsigned int entryCount);
-
-char *getFullName(AGENDA_ENTRY *entry) {
-    char *fullName = malloc(strlen(entry->name) + strlen(entry->surname) + 2);
-    fullName[0] = '\0';
-
-    fullName = strcat(fullName, entry->name);
-    fullName = strcat(fullName, " ");
-    fullName = strcat(fullName, entry->surname);
-    fullName = strcat(fullName, "\0");
-
-    return fullName;
-}
-
-int fullNameComparator(const void *p1, const void *p2) {
-    AGENDA_ENTRY *entry1 = (AGENDA_ENTRY *) p1;
-    AGENDA_ENTRY *entry2 = (AGENDA_ENTRY *) p2;
-
-    char *fullName1 = getFullName(entry1);
-    char *fullName2 = getFullName(entry2);
-
-    int ret = strcmp(fullName1, fullName2);
-
-    free(fullName1);
-    free(fullName2);
-
-    return ret;
-}
-
 void listWithComparator(ARRAY_AGENDA * agenda, void * comparator) {
     // don't want to modify the original array, so we create a new array for holding the entries' addresses
     AGENDA_ENTRY entries[agenda->entryCount];
@@ -45,16 +16,7 @@ void listWithComparator(ARRAY_AGENDA * agenda, void * comparator) {
         entries[i] = agenda->entries[i];
     }
 
-    qsort(entries, agenda->entryCount, sizeof(AGENDA_ENTRY), comparator);
-
-    listEntries(entries, agenda->entryCount);
-}
-
-int ageComparator(const void *p1, const void *p2) {
-    AGENDA_ENTRY *entry1 = (AGENDA_ENTRY *) p1;
-    AGENDA_ENTRY *entry2 = (AGENDA_ENTRY *) p2;
-
-    return entry1->age - entry2->age;
+    listEntriesWithComparator(entries, agenda->size, comparator);
 }
 
 void addEntry(ARRAY_AGENDA *agenda, const AGENDA_ENTRY entry) {
@@ -92,13 +54,4 @@ void listAgendaAlphabetically(ARRAY_AGENDA *agenda) {
 void listAgendaByAge(ARRAY_AGENDA *agenda) {
     printf("Listing agenda by age:\n");
     listWithComparator(agenda, &ageComparator);
-}
-
-void listEntries(const AGENDA_ENTRY *entries, unsigned int entryCount) {
-    for (int i = 0; i < entryCount; i++) {
-        AGENDA_ENTRY entry = entries[i];
-        printf("%i - Name: %s\n\tSurname: %s\n\tID: %s\n\tAge: %hu\n", i + 1, entry.name, entry.surname, entry.id,
-               entry.age);
-    }
-    printf("\n\n");
 }
