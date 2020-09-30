@@ -41,8 +41,7 @@ void removeEntryAt(ARRAY_AGENDA *agenda, unsigned int pos) {
         agenda->entries[i] = agenda->entries[i+1];
     }
 
-    // remove one from the counter and size to avoid overstepping
-    agenda->size--;
+    // remove one from the counter to avoid overstepping
     agenda->entryCount--;
 }
 
