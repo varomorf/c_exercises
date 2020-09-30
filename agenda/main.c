@@ -37,6 +37,11 @@ void executeForArray() {
     listAgendaAsIs(agenda);
     listAgendaAlphabetically(agenda);
     listAgendaByAge(agenda);
+
+    removeEntryAt(agenda, 2);
+    listAgendaAsIs(agenda);
+    addEntry(agenda, createAgendaEntry("Pablo", "Bravo", "12345680A", 42));
+    listAgendaAsIs(agenda);
 }
 
 void executeForList() {

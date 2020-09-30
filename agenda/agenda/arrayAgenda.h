@@ -14,6 +14,7 @@ typedef struct ARRAY_AGENDA {
 } ARRAY_AGENDA;
 
 void addEntry(ARRAY_AGENDA *agenda, AGENDA_ENTRY entry);
+void removeEntryAt(ARRAY_AGENDA *agenda, unsigned int pos);
 
 ARRAY_AGENDA* createArrayAgenda(int initialSize);
 

@@ -30,6 +30,22 @@ void addEntry(ARRAY_AGENDA *agenda, const AGENDA_ENTRY entry) {
     agenda->entryCount++;
 }
 
+void removeEntryAt(ARRAY_AGENDA *agenda, unsigned int pos) {
+    // pre-conditions
+    if(agenda->size == 0 || pos < 0 || pos >= agenda->size){
+        return;
+    }
+
+    for (unsigned int i = pos; i < agenda->size - 1; ++i) {
+        // overwrite the entries from pos with the values one position later
+        agenda->entries[i] = agenda->entries[i+1];
+    }
+
+    // remove one from the counter and size to avoid overstepping
+    agenda->size--;
+    agenda->entryCount--;
+}
+
 ARRAY_AGENDA *createArrayAgenda(int initialSize) {
     ARRAY_AGENDA *agenda = malloc(sizeof(ARRAY_AGENDA));
 
