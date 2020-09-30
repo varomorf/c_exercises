@@ -39,9 +39,19 @@ void executeForArray() {
     listAgendaAlphabetically(agenda);
     listAgendaByAge(agenda);
 
+    printf("Removal tests *****\n\n");
+
+    removeEntryAt(agenda, 3);
+    listAgendaAsIs(agenda);
+    addEntry(agenda, createAgendaEntry("Migui", "The cat", "12345681A", 1));
+    listAgendaAsIs(agenda);
     removeEntryAt(agenda, 2);
     listAgendaAsIs(agenda);
     addEntry(agenda, createAgendaEntry("Pablo", "Bravo", "12345680A", 42));
+    listAgendaAsIs(agenda);
+    removeEntryAt(agenda, 0);
+    listAgendaAsIs(agenda);
+    addEntry(agenda, createAgendaEntry("Alvaro", "Fernández González", "12345678A", 35));
     listAgendaAsIs(agenda);
 }
 
