@@ -19,13 +19,13 @@ AGENDA_ENTRY createAgendaEntry(char *name, char *surname, char *id, unsigned sho
 }
 
 char *getFullName(AGENDA_ENTRY *entry) {
-    char *fullName = malloc(strlen(entry->name) + strlen(entry->surname) + 2);
-    fullName[0] = '\0';
+    size_t fullNameSize = strlen(entry->name) + strlen(entry->surname) + 2;
+    char *fullName = malloc(fullNameSize);
+    memset(fullName, 0, fullNameSize);
 
     fullName = strcat(fullName, entry->name);
     fullName = strcat(fullName, " ");
     fullName = strcat(fullName, entry->surname);
-    fullName = strcat(fullName, "\0");
 
     return fullName;
 }
