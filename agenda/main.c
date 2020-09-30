@@ -57,8 +57,18 @@ void executeForList() {
     listListAgendaAlphabetically(agenda);
     listListAgendaByAge(agenda);
 
+    printf("Removal tests *****\n\n");
+
+    removeListEntryAt(agenda, 3);
+    listListAgendaAsIs(agenda);
+    addListEntry(agenda, createAgendaEntry("Migui", "The cat", "12345681A", 1));
+    listListAgendaAsIs(agenda);
     removeListEntryAt(agenda, 2);
     listListAgendaAsIs(agenda);
     addListEntry(agenda, createAgendaEntry("Pablo", "Bravo", "12345680A", 42));
+    listListAgendaAsIs(agenda);
+    removeListEntryAt(agenda, 0);
+    listListAgendaAsIs(agenda);
+    addListEntry(agenda, createAgendaEntry("Alvaro", "Fernández González", "12345678A", 35));
     listListAgendaAsIs(agenda);
 }

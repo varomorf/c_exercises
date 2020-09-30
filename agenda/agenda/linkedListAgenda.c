@@ -36,24 +36,32 @@ void addListEntry(LIST_AGENDA *agenda, AGENDA_ENTRY entry) {
 
 void removeListEntryAt(LIST_AGENDA *agenda, unsigned int pos) {
     // pre-conditions
-    if(agenda->size == 0 || pos < 0 || pos >= agenda->size){
+    if (agenda->size == 0 || pos < 0 || pos >= agenda->size) {
         return;
     }
-    
-    if(pos == 0){
-        //special case
-        agenda->head = agenda->head->next;
-    }
 
-    // iterate over the list to find the node previous to the node being deleted
-    LIST_AGENDA_NODE *iterator = agenda->head;
-    for (unsigned int i = 1; i < pos; ++i) {
-        iterator = iterator->next;
+    LIST_AGENDA_NODE *nodeToDelete;
+    if (pos == 0) {
+        //special case when deleting the head node
+        nodeToDelete = agenda->head;
+        agenda->head = agenda->head->next;
+    } else {
+        // iterate over the list to find the node previous to the node being deleted
+        LIST_AGENDA_NODE *iterator = agenda->head;
+        for (unsigned int i = 1; i < pos; ++i) {
+            iterator = iterator->next;
+        }
+
+        nodeToDelete = iterator->next;
+        //special case when deleting the last node (we need to move the last pointer to the previous node)
+        if (pos == agenda->size - 1) {
+            agenda->last = iterator;
+            iterator->next = NULL;
+        } else {
+            // point the next to the next next (which will make the node to be deleted parent-less)
+            iterator->next = nodeToDelete->next;
+        }
     }
-    
-    // point the next to the next next (which will make the
-    LIST_AGENDA_NODE *nodeToDelete = iterator->next;
-    iterator->next = nodeToDelete->next;
 
     free(nodeToDelete);
 }
