@@ -3,6 +3,7 @@
 #include "agenda/linkedListAgenda.h"
 
 void executeForArray();
+
 void executeForList();
 
 /*
@@ -55,4 +56,9 @@ void executeForList() {
     listListAgendaAsIs(agenda);
     listListAgendaAlphabetically(agenda);
     listListAgendaByAge(agenda);
+
+    removeListEntryAt(agenda, 2);
+    listListAgendaAsIs(agenda);
+    addListEntry(agenda, createAgendaEntry("Pablo", "Bravo", "12345680A", 42));
+    listListAgendaAsIs(agenda);
 }

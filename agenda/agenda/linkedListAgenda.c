@@ -34,6 +34,30 @@ void addListEntry(LIST_AGENDA *agenda, AGENDA_ENTRY entry) {
     agenda->size++;
 }
 
+void removeListEntryAt(LIST_AGENDA *agenda, unsigned int pos) {
+    // pre-conditions
+    if(agenda->size == 0 || pos < 0 || pos >= agenda->size){
+        return;
+    }
+    
+    if(pos == 0){
+        //special case
+        agenda->head = agenda->head->next;
+    }
+
+    // iterate over the list to find the node previous to the node being deleted
+    LIST_AGENDA_NODE *iterator = agenda->head;
+    for (unsigned int i = 1; i < pos; ++i) {
+        iterator = iterator->next;
+    }
+    
+    // point the next to the next next (which will make the
+    LIST_AGENDA_NODE *nodeToDelete = iterator->next;
+    iterator->next = nodeToDelete->next;
+
+    free(nodeToDelete);
+}
+
 void listListAgendaAsIs(LIST_AGENDA *agenda) {
     printf("Listing agenda as entered:\n");
     LIST_AGENDA_NODE *iterator = agenda->head;

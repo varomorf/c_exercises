@@ -21,6 +21,7 @@ typedef struct LinkedListAgenda {
 
 LIST_AGENDA* createLinkedListAgenda();
 void addListEntry(LIST_AGENDA *agenda, AGENDA_ENTRY entry);
+void removeListEntryAt(LIST_AGENDA *agenda, unsigned int pos);
 void listListAgendaAsIs(LIST_AGENDA *agenda);
 void listListAgendaAlphabetically(LIST_AGENDA *agenda);
 void listListAgendaByAge(LIST_AGENDA *agenda);
