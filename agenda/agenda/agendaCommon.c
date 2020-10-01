@@ -34,6 +34,13 @@ int fullNameComparator(const void *p1, const void *p2) {
     AGENDA_ENTRY *entry1 = *(AGENDA_ENTRY **) p1;
     AGENDA_ENTRY *entry2 = *(AGENDA_ENTRY **) p2;
 
+    return fullNameDirectComparator(entry1, entry2);
+}
+
+int fullNameDirectComparator(const void *p1, const void *p2) {
+    AGENDA_ENTRY *entry1 = (AGENDA_ENTRY *) p1;
+    AGENDA_ENTRY *entry2 = (AGENDA_ENTRY *) p2;
+
     char *fullName1 = getFullName(entry1);
     char *fullName2 = getFullName(entry2);
 
@@ -67,6 +74,6 @@ void listEntries(AGENDA_ENTRY **entries, unsigned int entryCount) {
 }
 
 void printEntry(AGENDA_ENTRY *entry, unsigned int pos) {
-    printf("%i - Name: %s\n\tSurname: %s\n\tID: %s\n\tAge: %hu\n", pos + 1, (*entry).name, (*entry).surname, (*entry).id,
-           (*entry).age);
+    printf("%i - Name: %s\n\tSurname: %s\n\tID: %s\n\tAge: %hu\n", pos + 1, entry->name, entry->surname, entry->id,
+           entry->age);
 }

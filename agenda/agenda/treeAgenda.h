@@ -9,7 +9,7 @@
 #include "agendaCommon.h"
 
 typedef struct TreeAgendaNode {
-    AGENDA_ENTRY entry;
+    AGENDA_ENTRY *entry;
     struct TreeAgendaNode *left;
     struct TreeAgendaNode *right;
 } TREE_AGENDA_NODE;
@@ -21,7 +21,7 @@ typedef struct TreeAgenda {
 } TREE_AGENDA;
 
 TREE_AGENDA* createTreeAgenda();
-void addTreeEntry(TREE_AGENDA *agenda, AGENDA_ENTRY entry);
+void addTreeEntry(TREE_AGENDA *agenda, AGENDA_ENTRY *entry);
 void removeTreeEntry(TREE_AGENDA *agenda, char *fullName);
 void listTreeAgendaAsIs(TREE_AGENDA *agenda);
 void listTreeAgendaAlphabetically(TREE_AGENDA *agenda);

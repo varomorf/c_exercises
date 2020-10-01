@@ -19,6 +19,7 @@ void listEntries(AGENDA_ENTRY **entries, unsigned int entryCount);
 void listEntriesWithComparator(AGENDA_ENTRY **entries, unsigned int entryCount, void * comparator);
 
 char *getFullName(AGENDA_ENTRY *entry);
+int fullNameDirectComparator(const void *p1, const void *p2);
 int fullNameComparator(const void *p1, const void *p2);
 int ageComparator(const void *p1, const void *p2);
 
