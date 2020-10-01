@@ -5,14 +5,17 @@
 #include "agendaCommon.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include "string.h"
+#include <string.h>
 
 AGENDA_ENTRY* createAgendaEntry(char *name, char *surname, char *id, unsigned short age) {
     AGENDA_ENTRY* entry = (AGENDA_ENTRY*) malloc(sizeof(AGENDA_ENTRY));
 
-    entry->name = name;
-    entry->surname = surname;
-    entry->id = id;
+    entry->name = (char*) malloc((strlen(name) + 1) * sizeof(char));
+    strcpy(entry->name, name);
+    entry->surname = (char*) malloc((strlen(surname) + 1) * sizeof(char));
+    strcpy(entry->surname, surname);
+    entry->id = (char*) malloc((strlen(id) + 1) * sizeof(char));
+    strcpy(entry->id, id);
     entry->age = age;
 
     return entry;
