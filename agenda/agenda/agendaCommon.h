@@ -23,4 +23,6 @@ int fullNameDirectComparator(const void *p1, const void *p2);
 int fullNameComparator(const void *p1, const void *p2);
 int ageComparator(const void *p1, const void *p2);
 
+void freeAgendaEntry(AGENDA_ENTRY *entry);
+
 #endif //AGENDA_AGENDACOMMON_H

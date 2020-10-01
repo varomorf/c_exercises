@@ -77,3 +77,10 @@ void printEntry(AGENDA_ENTRY *entry, unsigned int pos) {
     printf("%i - Name: %s\n\tSurname: %s\n\tID: %s\n\tAge: %hu\n", pos + 1, entry->name, entry->surname, entry->id,
            entry->age);
 }
+
+void freeAgendaEntry(AGENDA_ENTRY *entry) {
+    free(entry->name);
+    free(entry->surname);
+    free(entry->id);
+    free(entry);
+}

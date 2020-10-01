@@ -37,7 +37,7 @@ void removeEntryAt(ARRAY_AGENDA *agenda, unsigned int pos) {
     }
 
     // free the memory for the entry
-    free(agenda->entries[pos]);
+    freeAgendaEntry(agenda->entries[pos]);
 
     for (unsigned int i = pos; i < agenda->size - 1; ++i) {
         // overwrite the entries from pos with the values one position later

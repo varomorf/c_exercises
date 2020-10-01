@@ -63,6 +63,7 @@ void removeListEntryAt(LIST_AGENDA *agenda, unsigned int pos) {
         }
     }
 
+    freeAgendaEntry(nodeToDelete->entry);
     free(nodeToDelete);
 }
 

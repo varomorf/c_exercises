@@ -56,7 +56,7 @@ void removeTreeEntry(TREE_AGENDA *agenda, char *fullName) {
             // there was no left part, no need to traverse adding
         }
 
-        free(nodeToBeRemoved->entry);
+        freeAgendaEntry(nodeToBeRemoved->entry);
         free(nodeToBeRemoved);
     } else if (comparison < 0) {
         traverseRemovingFromNode(agenda->head, fullName, true);
@@ -150,7 +150,7 @@ void traverseRemovingFromNode(TREE_AGENDA_NODE *node, char *fullName, bool right
         traverseAddingFromNode(node, nodeToBeRemoved->left);
         traverseAddingFromNode(node, nodeToBeRemoved->right);
 
-        free(nodeToBeRemoved->entry);
+        freeAgendaEntry(nodeToBeRemoved->entry);
         free(nodeToBeRemoved);
     } else if (comparison < 0){
         traverseRemovingFromNode(nodeToCheck, fullName, true);
