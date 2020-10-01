@@ -22,10 +22,10 @@ int main() {
 
     printf("**** ARRAY VERSION ****\n\n");
     executeForArray();
-//    printf("**** LINKED LIST VERSION ****\n\n");
-//    executeForList();
-//    printf("**** TREE VERSION ****\n\n");
-//    executeForTree();
+    printf("**** LINKED LIST VERSION ****\n\n");
+    executeForList();
+    printf("**** TREE VERSION ****\n\n");
+    executeForTree();
 
     return 0;
 }
