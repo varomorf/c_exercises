@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include "agenda/arrayAgenda.h"
 #include "agenda/linkedListAgenda.h"
+#include "agenda/treeAgenda.h"
 
 void executeForArray();
-
 void executeForList();
+void executeForTree();
 
 /*
  * A ver q casi me pasa, que te parece facer en C un programilla de agenda.
@@ -19,10 +20,12 @@ void executeForList();
 int main() {
     printf("Hello and welcome to Zapienda! The \"AI-powered\" agenda.\n\n");
 
-    printf("**** ARRAY VERSION ****\n\n");
-    executeForArray();
-    printf("**** LINKED LIST VERSION ****\n\n");
-    executeForList();
+//    printf("**** ARRAY VERSION ****\n\n");
+//    executeForArray();
+//    printf("**** LINKED LIST VERSION ****\n\n");
+//    executeForList();
+    printf("**** TREE VERSION ****\n\n");
+    executeForTree();
 
     return 0;
 }
@@ -81,4 +84,32 @@ void executeForList() {
     listListAgendaAsIs(agenda);
     addListEntry(agenda, createAgendaEntry("Alvaro", "Fernández González", "12345678A", 35));
     listListAgendaAsIs(agenda);
+}
+
+void executeForTree() {
+    TREE_AGENDA *agenda = createTreeAgenda();
+
+    addTreeEntry(agenda, createAgendaEntry("Alvaro", "Fernández González", "12345678A", 35));
+    addTreeEntry(agenda, createAgendaEntry("Sara", "Zapico Fernández", "12345679A", 33));
+    addTreeEntry(agenda, createAgendaEntry("Pablo", "Bravo", "12345680A", 42));
+    addTreeEntry(agenda, createAgendaEntry("Migui", "The cat", "12345681A", 1));
+
+    listTreeAgendaAsIs(agenda);
+    listTreeAgendaAlphabetically(agenda);
+    listTreeAgendaByAge(agenda);
+
+    printf("Removal tests *****\n\n");
+
+    removeTreeEntry(agenda, "Migui The cat");
+    listTreeAgendaAsIs(agenda);
+    addTreeEntry(agenda, createAgendaEntry("Migui", "The cat", "12345681A", 1));
+    listTreeAgendaAsIs(agenda);
+    removeTreeEntry(agenda, "Pablo Bravo");
+    listTreeAgendaAsIs(agenda);
+    addTreeEntry(agenda, createAgendaEntry("Pablo", "Bravo", "12345680A", 42));
+    listTreeAgendaAsIs(agenda);
+    removeTreeEntry(agenda, "Alvaro Fernández González");
+    listTreeAgendaAsIs(agenda);
+    addTreeEntry(agenda, createAgendaEntry("Alvaro", "Fernández González", "12345678A", 35));
+    listTreeAgendaAsIs(agenda);
 }
