@@ -15,7 +15,7 @@ LIST_AGENDA *createLinkedListAgenda() {
     return agenda;
 }
 
-void addListEntry(LIST_AGENDA *agenda, AGENDA_ENTRY entry) {
+void addListEntry(LIST_AGENDA *agenda, AGENDA_ENTRY *entry) {
     LIST_AGENDA_NODE *node = malloc(sizeof(LIST_AGENDA_NODE));
 
     node->entry = entry;
@@ -72,9 +72,7 @@ void listListAgendaAsIs(LIST_AGENDA *agenda) {
 
     unsigned int count = 1;
     while (iterator != NULL) {
-        AGENDA_ENTRY entry = iterator->entry;
-        printf("%i - Name: %s\n\tSurname: %s\n\tID: %s\n\tAge: %hu\n", count, entry.name, entry.surname, entry.id,
-               entry.age);
+        printEntry(iterator->entry, count);
 
         iterator = iterator->next;
         count++;
@@ -88,7 +86,7 @@ AGENDA_ENTRY *getListEntries(LIST_AGENDA *agenda) {
         return NULL;
     }
 
-    AGENDA_ENTRY *entries = malloc(agenda->size * sizeof(AGENDA_ENTRY));
+    AGENDA_ENTRY **entries = malloc(agenda->size * sizeof(AGENDA_ENTRY));
 
     LIST_AGENDA_NODE *current = agenda->head;
     entries[0] = current->entry;

@@ -8,7 +8,7 @@
 #include "agendaCommon.h"
 
 typedef struct LinkedListAgendaNode {
-    AGENDA_ENTRY entry;
+    AGENDA_ENTRY *entry;
     struct LinkedListAgendaNode *next;
 } LIST_AGENDA_NODE;
 
@@ -20,7 +20,7 @@ typedef struct LinkedListAgenda {
 } LIST_AGENDA;
 
 LIST_AGENDA* createLinkedListAgenda();
-void addListEntry(LIST_AGENDA *agenda, AGENDA_ENTRY entry);
+void addListEntry(LIST_AGENDA *agenda, AGENDA_ENTRY *entry);
 void removeListEntryAt(LIST_AGENDA *agenda, unsigned int pos);
 void listListAgendaAsIs(LIST_AGENDA *agenda);
 void listListAgendaAlphabetically(LIST_AGENDA *agenda);
