@@ -20,12 +20,12 @@ void executeForTree();
 int main() {
     printf("Hello and welcome to Zapienda! The \"AI-powered\" agenda.\n\n");
 
-//    printf("**** ARRAY VERSION ****\n\n");
-//    executeForArray();
+    printf("**** ARRAY VERSION ****\n\n");
+    executeForArray();
 //    printf("**** LINKED LIST VERSION ****\n\n");
 //    executeForList();
-    printf("**** TREE VERSION ****\n\n");
-    executeForTree();
+//    printf("**** TREE VERSION ****\n\n");
+//    executeForTree();
 
     return 0;
 }

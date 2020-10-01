@@ -10,7 +10,7 @@ static const int ARRAY_AGENDA_INCR = 1;
 
 void listWithComparator(ARRAY_AGENDA * agenda, void * comparator) {
     // don't want to modify the original array, so we create a new array for holding the entries' addresses
-    AGENDA_ENTRY entries[agenda->entryCount];
+    AGENDA_ENTRY* entries[agenda->entryCount];
     for (int i = 0; i < agenda->entryCount; ++i) {
         entries[i] = agenda->entries[i];
     }
@@ -18,11 +18,11 @@ void listWithComparator(ARRAY_AGENDA * agenda, void * comparator) {
     listEntriesWithComparator(entries, agenda->size, comparator);
 }
 
-void addEntry(ARRAY_AGENDA *agenda, const AGENDA_ENTRY entry) {
+void addEntry(ARRAY_AGENDA *agenda, AGENDA_ENTRY *entry) {
     if (agenda->entryCount == agenda->size) {
         // Agenda is full -> grow array by reallocate memory
         unsigned int newSize = agenda->size + ARRAY_AGENDA_INCR;
-        agenda->entries = realloc(agenda->entries, newSize * sizeof(AGENDA_ENTRY));
+        agenda->entries = realloc(agenda->entries, newSize * sizeof(AGENDA_ENTRY*));
         agenda->size = newSize;
     }
 
@@ -35,6 +35,9 @@ void removeEntryAt(ARRAY_AGENDA *agenda, unsigned int pos) {
     if(agenda->size == 0 || pos < 0 || pos >= agenda->size){
         return;
     }
+
+    // free the memory for the entry
+    free(agenda->entries[pos]);
 
     for (unsigned int i = pos; i < agenda->size - 1; ++i) {
         // overwrite the entries from pos with the values one position later
@@ -49,7 +52,7 @@ ARRAY_AGENDA *createArrayAgenda(int initialSize) {
     ARRAY_AGENDA *agenda = malloc(sizeof(ARRAY_AGENDA));
 
     agenda->size = initialSize;
-    agenda->entries = (AGENDA_ENTRY *) malloc(initialSize * sizeof(AGENDA_ENTRY));
+    agenda->entries = (AGENDA_ENTRY **) malloc(initialSize * sizeof(AGENDA_ENTRY*));
     agenda->entryCount = 0;
 
     return agenda;

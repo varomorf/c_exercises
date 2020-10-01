@@ -8,12 +8,12 @@
 #include "agendaCommon.h"
 
 typedef struct ARRAY_AGENDA {
-    AGENDA_ENTRY *entries;
+    AGENDA_ENTRY **entries;
     unsigned int size;
     unsigned int entryCount;
 } ARRAY_AGENDA;
 
-void addEntry(ARRAY_AGENDA *agenda, AGENDA_ENTRY entry);
+void addEntry(ARRAY_AGENDA *agenda, AGENDA_ENTRY *entry);
 void removeEntryAt(ARRAY_AGENDA *agenda, unsigned int pos);
 
 ARRAY_AGENDA* createArrayAgenda(int initialSize);
