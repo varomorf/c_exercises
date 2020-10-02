@@ -4,6 +4,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "linkedListAgenda.h"
 
 LIST_AGENDA *createLinkedListAgenda() {
@@ -34,66 +35,71 @@ void addListEntry(LIST_AGENDA *agenda, AGENDA_ENTRY *entry) {
     agenda->size++;
 }
 
-void removeListEntryAt(LIST_AGENDA *agenda, unsigned int pos) {
+void removeListEntry(LIST_AGENDA *agenda, char *fullNameToRemove) {
     // pre-conditions
-    if (agenda->size == 0 || pos < 0 || pos >= agenda->size) {
+    if (agenda->size == 0) {
         return;
     }
 
-    LIST_AGENDA_NODE *nodeToDelete;
-    if (pos == 0) {
-        //special case when deleting the head node
-        nodeToDelete = agenda->head;
-        agenda->head = agenda->head->next;
-    } else {
-        // iterate over the list to find the node previous to the node being deleted
-        LIST_AGENDA_NODE *iterator = agenda->head;
-        for (unsigned int i = 1; i < pos; ++i) {
-            iterator = iterator->next;
+    // iterate over the list to find the node previous to the node being deleted
+    char *entryFullName;
+    LIST_AGENDA_NODE *previousNode, *iterator;
+    previousNode = iterator = agenda->head;
+    while (iterator != NULL){
+        entryFullName = getFullName(iterator->entry);
+        int found = strcmp(entryFullName, fullNameToRemove) == 0;
+        if(found){
+            if(iterator == agenda->head){
+                //special case deleting the head
+                agenda->head = iterator->next;
+                agenda->last = agenda->head;
+            } else if(iterator == agenda->last){
+                //special case deleting last node
+                agenda->last = previousNode;
+                previousNode->next = NULL;
+            } else {
+                // normal case
+                previousNode->next = iterator->next;
+            }
+
+            freeAgendaEntry(iterator->entry);
+            free(iterator);
+
+            agenda->size--;
         }
 
-        nodeToDelete = iterator->next;
-        //special case when deleting the last node (we need to move the last pointer to the previous node)
-        if (pos == agenda->size - 1) {
-            agenda->last = iterator;
-            iterator->next = NULL;
-        } else {
-            // point the next to the next next (which will make the node to be deleted parent-less)
-            iterator->next = nodeToDelete->next;
+        // clean up allocated memory
+        free(entryFullName);
+
+        if(found){
+            break;
         }
-    }
 
-    freeAgendaEntry(nodeToDelete->entry);
-    free(nodeToDelete);
-}
-
-void listListAgendaAsIs(LIST_AGENDA *agenda) {
-    printf("Listing agenda as entered:\n");
-    LIST_AGENDA_NODE *iterator = agenda->head;
-
-    unsigned int count = 1;
-    while (iterator != NULL) {
-        printEntry(iterator->entry, count);
+        // move the pointers
+        if(iterator != agenda->head){
+            // the previous node pointer must be moved only if the iterator is not the agenda's head
+            previousNode = iterator;
+        }
 
         iterator = iterator->next;
-        count++;
     }
 
-    printf("\n\n");
 }
 
-AGENDA_ENTRY *getListEntries(LIST_AGENDA *agenda) {
+AGENDA_ENTRY **getListEntries(LIST_AGENDA *agenda) {
     if (agenda->size == 0) {
         return NULL;
     }
 
     AGENDA_ENTRY **entries = malloc(agenda->size * sizeof(AGENDA_ENTRY));
 
-    LIST_AGENDA_NODE *current = agenda->head;
-    entries[0] = current->entry;
-    for (int i = 1; i < agenda->size; ++i) {
-        current = current->next;
-        entries[i] = current->entry;
+    LIST_AGENDA_NODE *iterator = agenda->head;
+    int i = 0;
+    while(iterator != NULL){
+        entries[i] = iterator->entry;
+
+        iterator = iterator->next;
+        i++;
     }
 
     return entries;
@@ -102,7 +108,7 @@ AGENDA_ENTRY *getListEntries(LIST_AGENDA *agenda) {
 void listListAgendaAlphabetically(LIST_AGENDA *agenda) {
     printf("Listing agenda alphabetically:\n");
 
-    AGENDA_ENTRY *entries = getListEntries(agenda);
+    AGENDA_ENTRY **entries = getListEntries(agenda);
     if (entries == NULL) {
         return;
     }
@@ -113,7 +119,7 @@ void listListAgendaAlphabetically(LIST_AGENDA *agenda) {
 void listListAgendaByAge(LIST_AGENDA *agenda) {
     printf("Listing agenda by age:\n");
 
-    AGENDA_ENTRY *entries = getListEntries(agenda);
+    AGENDA_ENTRY **entries = getListEntries(agenda);
     if (entries == NULL) {
         return;
     }
