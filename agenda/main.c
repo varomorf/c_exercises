@@ -13,9 +13,9 @@
 
 int executeForArray();
 
-void executeForList();
+int executeForList();
 
-void executeForTree();
+int executeForTree();
 
 int getOption();
 
@@ -24,6 +24,10 @@ AGENDA_ENTRY *getAgendaEntryFromUser();
 char *getFullNameFromUser();
 
 void removeEntryFromArrayAgenda(ARRAY_AGENDA *agenda);
+
+void removeEntryFromListAgenda(LIST_AGENDA *agenda);
+
+void removeEntryFromTreeAgenda(TREE_AGENDA *agenda);
 
 /*
  * A ver q casi me pasa, que te parece facer en C un programilla de agenda.
@@ -48,17 +52,13 @@ int main() {
         case 1:
             return executeForArray();
         case 2:
-            executeForList();
-            break;
+            return executeForList();
         case 3:
-            executeForTree();
-            break;
+            return executeForTree();
         default:
             printf("Wrong option");
             return 1;
     }
-
-    return 0;
 }
 
 int executeForArray() {
@@ -97,68 +97,94 @@ int executeForArray() {
     return 0;
 }
 
+int executeForList() {
+    printf("**** LINKED LIST VERSION ****\n\n");
+    LIST_AGENDA *agenda = createLinkedListAgenda();
+
+    // pre-made data
+    addListEntry(agenda, createAgendaEntry("Alvaro", "Fernández González", "12345678A", 35));
+    addListEntry(agenda, createAgendaEntry("Sara", "Zapico Fernández", "12345679A", 33));
+    addListEntry(agenda, createAgendaEntry("Pablo", "Bravo", "12345680A", 42));
+    addListEntry(agenda, createAgendaEntry("Migui", "The cat", "12345681A", 1));
+
+    int option = getOption();
+    while (option != EXIT) {
+        switch (option) {
+            case ADD_ENTRY:
+                addListEntry(agenda, getAgendaEntryFromUser());
+                break;
+            case REMOVE_ENTRY:
+                removeEntryFromListAgenda(agenda);
+                break;
+            case LIST_ALPHABETICALLY:
+                listListAgendaAlphabetically(agenda);
+                break;
+            case LIST_BY_AGE:
+                listListAgendaByAge(agenda);
+                break;
+            default:
+                printf("Wrong option");
+                return 1;
+        }
+
+        option = getOption();
+    }
+
+    return 0;
+}
+
+int executeForTree() {
+    printf("**** TREE VERSION ****\n\n");
+    TREE_AGENDA *agenda = createTreeAgenda();
+
+    // pre-made data
+    addTreeEntry(agenda, createAgendaEntry("Alvaro", "Fernández González", "12345678A", 35));
+    addTreeEntry(agenda, createAgendaEntry("Sara", "Zapico Fernández", "12345679A", 33));
+    addTreeEntry(agenda, createAgendaEntry("Pablo", "Bravo", "12345680A", 42));
+    addTreeEntry(agenda, createAgendaEntry("Migui", "The cat", "12345681A", 1));
+
+    int option = getOption();
+    while (option != EXIT) {
+        switch (option) {
+            case ADD_ENTRY:
+                addTreeEntry(agenda, getAgendaEntryFromUser());
+                break;
+            case REMOVE_ENTRY:
+                removeEntryFromTreeAgenda(agenda);
+                break;
+            case LIST_ALPHABETICALLY:
+                listTreeAgendaAlphabetically(agenda);
+                break;
+            case LIST_BY_AGE:
+                listTreeAgendaByAge(agenda);
+                break;
+            default:
+                printf("Wrong option");
+                return 1;
+        }
+
+        option = getOption();
+    }
+
+    return 0;
+}
+
 void removeEntryFromArrayAgenda(ARRAY_AGENDA *agenda) {
     char *fullNameToRemove = getFullNameFromUser();
     removeEntry(agenda, fullNameToRemove);
     free(fullNameToRemove);
 }
 
-void executeForList() {
-    printf("**** LINKED LIST VERSION ****\n\n");
-    LIST_AGENDA *agenda = createLinkedListAgenda();
-
-    addListEntry(agenda, createAgendaEntry("Alvaro", "Fernández González", "12345678A", 35));
-    addListEntry(agenda, createAgendaEntry("Sara", "Zapico Fernández", "12345679A", 33));
-    addListEntry(agenda, createAgendaEntry("Pablo", "Bravo", "12345680A", 42));
-    addListEntry(agenda, createAgendaEntry("Migui", "The cat", "12345681A", 1));
-
-    listListAgendaAsIs(agenda);
-    listListAgendaAlphabetically(agenda);
-    listListAgendaByAge(agenda);
-
-    printf("Removal tests *****\n\n");
-
-    removeListEntryAt(agenda, 3);
-    listListAgendaAsIs(agenda);
-    addListEntry(agenda, createAgendaEntry("Migui", "The cat", "12345681A", 1));
-    listListAgendaAsIs(agenda);
-    removeListEntryAt(agenda, 2);
-    listListAgendaAsIs(agenda);
-    addListEntry(agenda, createAgendaEntry("Pablo", "Bravo", "12345680A", 42));
-    listListAgendaAsIs(agenda);
-    removeListEntryAt(agenda, 0);
-    listListAgendaAsIs(agenda);
-    addListEntry(agenda, createAgendaEntry("Alvaro", "Fernández González", "12345678A", 35));
-    listListAgendaAsIs(agenda);
+void removeEntryFromListAgenda(LIST_AGENDA *agenda) {
+    char *fullNameToRemove = getFullNameFromUser();
+    removeListEntry(agenda, fullNameToRemove);
+    free(fullNameToRemove);
 }
 
-void executeForTree() {
-    printf("**** TREE VERSION ****\n\n");
-    TREE_AGENDA *agenda = createTreeAgenda();
-
-    addTreeEntry(agenda, createAgendaEntry("Alvaro", "Fernández González", "12345678A", 35));
-    addTreeEntry(agenda, createAgendaEntry("Sara", "Zapico Fernández", "12345679A", 33));
-    addTreeEntry(agenda, createAgendaEntry("Pablo", "Bravo", "12345680A", 42));
-    addTreeEntry(agenda, createAgendaEntry("Migui", "The cat", "12345681A", 1));
-
-    listTreeAgendaAsIs(agenda);
-    listTreeAgendaAlphabetically(agenda);
-    listTreeAgendaByAge(agenda);
-
-    printf("Removal tests *****\n\n");
-
-    removeTreeEntry(agenda, "Migui The cat");
-    listTreeAgendaAsIs(agenda);
-    addTreeEntry(agenda, createAgendaEntry("Migui", "The cat", "12345681A", 1));
-    listTreeAgendaAsIs(agenda);
-    removeTreeEntry(agenda, "Pablo Bravo");
-    listTreeAgendaAsIs(agenda);
-    addTreeEntry(agenda, createAgendaEntry("Pablo", "Bravo", "12345680A", 42));
-    listTreeAgendaAsIs(agenda);
-    removeTreeEntry(agenda, "Alvaro Fernández González");
-    listTreeAgendaAsIs(agenda);
-    addTreeEntry(agenda, createAgendaEntry("Alvaro", "Fernández González", "12345678A", 35));
-    listTreeAgendaAsIs(agenda);
+void removeEntryFromTreeAgenda(TREE_AGENDA *agenda) {
+    char *fullNameToRemove = getFullNameFromUser();
+    removeTreeEntry(agenda, fullNameToRemove);
+    free(fullNameToRemove);
 }
 
 int getOption() {
