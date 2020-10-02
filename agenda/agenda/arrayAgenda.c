@@ -4,6 +4,8 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
 #include "arrayAgenda.h"
 
 static const int ARRAY_AGENDA_INCR = 1;
@@ -15,7 +17,7 @@ void listWithComparator(ARRAY_AGENDA * agenda, void * comparator) {
         entries[i] = agenda->entries[i];
     }
 
-    listEntriesWithComparator(entries, agenda->size, comparator);
+    listEntriesWithComparator(entries, agenda->entryCount, comparator);
 }
 
 void addEntry(ARRAY_AGENDA *agenda, AGENDA_ENTRY *entry) {
@@ -32,20 +34,32 @@ void addEntry(ARRAY_AGENDA *agenda, AGENDA_ENTRY *entry) {
 
 void removeEntryAt(ARRAY_AGENDA *agenda, unsigned int pos) {
     // pre-conditions
-    if(agenda->size == 0 || pos < 0 || pos >= agenda->size){
+    if(agenda->entryCount == 0 || pos < 0 || pos >= agenda->entryCount){
         return;
     }
 
     // free the memory for the entry
     freeAgendaEntry(agenda->entries[pos]);
 
-    for (unsigned int i = pos; i < agenda->size - 1; ++i) {
+    for (unsigned int i = pos; i < agenda->entryCount - 1; ++i) {
         // overwrite the entries from pos with the values one position later
         agenda->entries[i] = agenda->entries[i+1];
     }
 
     // remove one from the counter to avoid overstepping
     agenda->entryCount--;
+}
+
+void removeEntry(ARRAY_AGENDA *agenda, char *fullNameToRemove) {
+    for (int i = 0; i < agenda->entryCount; ++i) {
+        char *entryFullName = getFullName(agenda->entries[i]);
+        bool found = strcmp(entryFullName, fullNameToRemove) == 0;
+        free(entryFullName);
+        if(found){
+            removeEntryAt(agenda, i);
+            break;
+        }
+    }
 }
 
 ARRAY_AGENDA *createArrayAgenda(int initialSize) {
@@ -56,11 +70,6 @@ ARRAY_AGENDA *createArrayAgenda(int initialSize) {
     agenda->entryCount = 0;
 
     return agenda;
-}
-
-void listAgendaAsIs(ARRAY_AGENDA *agenda) {
-    printf("Listing agenda as entered:\n");
-    listEntries(agenda->entries, agenda->entryCount);
 }
 
 void listAgendaAlphabetically(ARRAY_AGENDA *agenda) {

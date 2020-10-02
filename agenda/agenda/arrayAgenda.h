@@ -14,11 +14,10 @@ typedef struct ARRAY_AGENDA {
 } ARRAY_AGENDA;
 
 void addEntry(ARRAY_AGENDA *agenda, AGENDA_ENTRY *entry);
-void removeEntryAt(ARRAY_AGENDA *agenda, unsigned int pos);
+void removeEntry(ARRAY_AGENDA *agenda, char *fullNameToRemove);
 
 ARRAY_AGENDA* createArrayAgenda(int initialSize);
 
-void listAgendaAsIs(ARRAY_AGENDA *agenda);
 void listAgendaAlphabetically(ARRAY_AGENDA *agenda);
 void listAgendaByAge(ARRAY_AGENDA *agenda);
 

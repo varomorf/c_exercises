@@ -1,11 +1,29 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "agenda/arrayAgenda.h"
 #include "agenda/linkedListAgenda.h"
 #include "agenda/treeAgenda.h"
+#include "utils/utils.h"
 
-void executeForArray();
+#define ADD_ENTRY 1
+#define REMOVE_ENTRY 2
+#define LIST_ALPHABETICALLY 3
+#define LIST_BY_AGE 4
+#define EXIT 5
+
+int executeForArray();
+
 void executeForList();
+
 void executeForTree();
+
+int getOption();
+
+AGENDA_ENTRY *getAgendaEntryFromUser();
+
+char *getFullNameFromUser();
+
+void removeEntryFromArrayAgenda(ARRAY_AGENDA *agenda);
 
 /*
  * A ver q casi me pasa, que te parece facer en C un programilla de agenda.
@@ -19,46 +37,74 @@ void executeForTree();
 
 int main() {
     printf("Hello and welcome to Zapienda! The \"AI-powered\" agenda.\n\n");
+    printf("Which version of the agenda do you want to test out?\n");
+    printf("1 - Dynamic array\n");
+    printf("2 - Linked list\n");
+    printf("3 - Binary tree\n");
 
-    printf("**** ARRAY VERSION ****\n\n");
-    executeForArray();
-    printf("**** LINKED LIST VERSION ****\n\n");
-    executeForList();
-    printf("**** TREE VERSION ****\n\n");
-    executeForTree();
+    int option = readIntFromStdin();
+
+    switch (option) {
+        case 1:
+            return executeForArray();
+        case 2:
+            executeForList();
+            break;
+        case 3:
+            executeForTree();
+            break;
+        default:
+            printf("Wrong option");
+            return 1;
+    }
 
     return 0;
 }
 
-void executeForArray() {
+int executeForArray() {
+    printf("**** ARRAY VERSION ****\n\n");
     ARRAY_AGENDA *agenda = createArrayAgenda(2);
 
+    // pre-made data
     addEntry(agenda, createAgendaEntry("Alvaro", "Fernández González", "12345678A", 35));
     addEntry(agenda, createAgendaEntry("Sara", "Zapico Fernández", "12345679A", 33));
     addEntry(agenda, createAgendaEntry("Pablo", "Bravo", "12345680A", 42));
     addEntry(agenda, createAgendaEntry("Migui", "The cat", "12345681A", 1));
 
-    listAgendaAsIs(agenda);
-    listAgendaAlphabetically(agenda);
-    listAgendaByAge(agenda);
+    int option = getOption();
+    while (option != EXIT) {
+        switch (option) {
+            case ADD_ENTRY:
+                addEntry(agenda, getAgendaEntryFromUser());
+                break;
+            case REMOVE_ENTRY:
+                removeEntryFromArrayAgenda(agenda);
+                break;
+            case LIST_ALPHABETICALLY:
+                listAgendaAlphabetically(agenda);
+                break;
+            case LIST_BY_AGE:
+                listAgendaByAge(agenda);
+                break;
+            default:
+                printf("Wrong option");
+                return 1;
+        }
 
-    printf("Removal tests *****\n\n");
+        option = getOption();
+    }
 
-    removeEntryAt(agenda, 3);
-    listAgendaAsIs(agenda);
-    addEntry(agenda, createAgendaEntry("Migui", "The cat", "12345681A", 1));
-    listAgendaAsIs(agenda);
-    removeEntryAt(agenda, 2);
-    listAgendaAsIs(agenda);
-    addEntry(agenda, createAgendaEntry("Pablo", "Bravo", "12345680A", 42));
-    listAgendaAsIs(agenda);
-    removeEntryAt(agenda, 0);
-    listAgendaAsIs(agenda);
-    addEntry(agenda, createAgendaEntry("Alvaro", "Fernández González", "12345678A", 35));
-    listAgendaAsIs(agenda);
+    return 0;
+}
+
+void removeEntryFromArrayAgenda(ARRAY_AGENDA *agenda) {
+    char *fullNameToRemove = getFullNameFromUser();
+    removeEntry(agenda, fullNameToRemove);
+    free(fullNameToRemove);
 }
 
 void executeForList() {
+    printf("**** LINKED LIST VERSION ****\n\n");
     LIST_AGENDA *agenda = createLinkedListAgenda();
 
     addListEntry(agenda, createAgendaEntry("Alvaro", "Fernández González", "12345678A", 35));
@@ -87,6 +133,7 @@ void executeForList() {
 }
 
 void executeForTree() {
+    printf("**** TREE VERSION ****\n\n");
     TREE_AGENDA *agenda = createTreeAgenda();
 
     addTreeEntry(agenda, createAgendaEntry("Alvaro", "Fernández González", "12345678A", 35));
@@ -112,4 +159,43 @@ void executeForTree() {
     listTreeAgendaAsIs(agenda);
     addTreeEntry(agenda, createAgendaEntry("Alvaro", "Fernández González", "12345678A", 35));
     listTreeAgendaAsIs(agenda);
+}
+
+int getOption() {
+    printf("Choose an action:\n");
+    printf("%d - Add entry\n", ADD_ENTRY);
+    printf("%d - Remove entry\n", REMOVE_ENTRY);
+    printf("%d - List all entries by name\n", LIST_ALPHABETICALLY);
+    printf("%d - List all entries by age\n", LIST_BY_AGE);
+    printf("\n");
+    printf("%d - EXIT\n", EXIT);
+
+    return readIntFromStdin();
+}
+
+AGENDA_ENTRY *getAgendaEntryFromUser() {
+    char *nameBuffer, *surnameBuffer, *idBuffer;
+    int age;
+    printf("Give me the name:\n");
+    nameBuffer = readStringFromStdin();
+    printf("Give me the surname:\n");
+    surnameBuffer = readStringFromStdin();
+    printf("Give me the ID:\n");
+    idBuffer = readStringFromStdin();
+    printf("Give me the age:\n");
+    age = readIntFromStdin();
+
+    AGENDA_ENTRY *newEntry = createAgendaEntry(nameBuffer, surnameBuffer, idBuffer, age);
+
+    free(nameBuffer);
+    free(surnameBuffer);
+    free(idBuffer);
+
+    return newEntry;
+}
+
+char *getFullNameFromUser() {
+    printf("Enter full name:\n");
+
+    return readStringFromStdin();
 }
