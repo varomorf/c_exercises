@@ -18,6 +18,8 @@ void removeEntry(ARRAY_AGENDA *agenda, char *fullNameToRemove);
 
 ARRAY_AGENDA* createArrayAgenda(int initialSize);
 
+AGENDA_ENTRY** getArrayEntries(struct ARRAY_AGENDA *agenda);
+
 void listAgendaAlphabetically(ARRAY_AGENDA *agenda);
 void listAgendaByAge(ARRAY_AGENDA *agenda);
 

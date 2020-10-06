@@ -11,13 +11,9 @@
 static const int ARRAY_AGENDA_INCR = 1;
 
 void listWithComparator(ARRAY_AGENDA * agenda, void * comparator) {
-    // don't want to modify the original array, so we create a new array for holding the entries' addresses
-    AGENDA_ENTRY* entries[agenda->entryCount];
-    for (int i = 0; i < agenda->entryCount; ++i) {
-        entries[i] = agenda->entries[i];
-    }
-
+    AGENDA_ENTRY **entries = getArrayEntries(agenda);
     listEntriesWithComparator(entries, agenda->entryCount, comparator);
+    free(entries);
 }
 
 void addEntry(ARRAY_AGENDA *agenda, AGENDA_ENTRY *entry) {
@@ -80,4 +76,14 @@ void listAgendaAlphabetically(ARRAY_AGENDA *agenda) {
 void listAgendaByAge(ARRAY_AGENDA *agenda) {
     printf("Listing agenda by age:\n");
     listWithComparator(agenda, &ageComparator);
+}
+
+AGENDA_ENTRY** getArrayEntries(struct ARRAY_AGENDA *agenda) {
+    // don't want to modify the original array, so we create a new array for holding the entries' addresses
+    AGENDA_ENTRY** entries = (AGENDA_ENTRY**) malloc(agenda->entryCount * sizeof(AGENDA_ENTRY*));
+    for (int i = 0; i < agenda->entryCount; ++i) {
+        entries[i] = agenda->entries[i];
+    }
+    
+    return entries;
 }
