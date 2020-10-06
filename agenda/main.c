@@ -251,13 +251,13 @@ void saveArrayAgendaToFile(ARRAY_AGENDA *agenda) {
 }
 
 void saveListAgendaToFile(LIST_AGENDA *agenda) {
-//    AGENDA_ENTRY **entries = getArrayEntries(agenda);
-//    saveEntriesToFile(entries, agenda->size);
-//    free(entries);
+    AGENDA_ENTRY **entries = getListEntries(agenda);
+    saveEntriesToFile(entries, agenda->size);
+    free(entries);
 }
 
 void saveTreeAgendaToFile(TREE_AGENDA *agenda) {
-//    AGENDA_ENTRY **entries = getArrayEntries(agenda);
-//    saveEntriesToFile(entries, agenda->size);
-//    free(entries);
+    AGENDA_ENTRY **entries = getTreeEntries(agenda);
+    saveEntriesToFile(entries, agenda->size);
+    free(entries);
 }

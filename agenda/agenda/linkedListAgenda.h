@@ -25,4 +25,6 @@ void removeListEntry(LIST_AGENDA *agenda, char *fullNameToRemove);
 void listListAgendaAlphabetically(LIST_AGENDA *agenda);
 void listListAgendaByAge(LIST_AGENDA *agenda);
 
+AGENDA_ENTRY** getListEntries(LIST_AGENDA *agenda);
+
 #endif //AGENDA_LINKEDLISTAGENDA_H

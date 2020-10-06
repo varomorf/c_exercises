@@ -119,7 +119,7 @@ void traverseAddingFromNode(TREE_AGENDA_NODE *root, TREE_AGENDA_NODE *traversabl
     if(traversableNode == NULL){
         return;
     }
-    
+
     traverseAddingFromNode(root, traversableNode->left);
     addEntryToNode(root, traversableNode);
     traverseAddingFromNode(root, traversableNode->right);
@@ -183,4 +183,10 @@ void addEntryToNode(TREE_AGENDA_NODE *traversingNode, TREE_AGENDA_NODE *newNode)
             addEntryToNode(traversingNode->right, newNode);
         }
     }
+}
+
+AGENDA_ENTRY **getTreeEntries(TREE_AGENDA *agenda) {
+    AGENDA_ENTRY **entries = (AGENDA_ENTRY**) malloc(agenda->size * sizeof(AGENDA_ENTRY*));
+    traverseGetArrayOfNodes(agenda->head, 0, entries);
+    return entries;
 }

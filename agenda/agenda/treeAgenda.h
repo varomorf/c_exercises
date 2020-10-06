@@ -27,4 +27,6 @@ void listTreeAgendaAsIs(TREE_AGENDA *agenda);
 void listTreeAgendaAlphabetically(TREE_AGENDA *agenda);
 void listTreeAgendaByAge(TREE_AGENDA *agenda);
 
+AGENDA_ENTRY** getTreeEntries(TREE_AGENDA *agenda);
+
 #endif //AGENDA_TREEAGENDA_H
