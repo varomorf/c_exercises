@@ -87,3 +87,20 @@ void freeAgendaEntry(AGENDA_ENTRY *entry) {
     free(entry->id);
     free(entry);
 }
+
+void saveEntriesToFile(AGENDA_ENTRY **entries, unsigned int entryCount) {
+    FILE *file = fopen("./data.csv", "w");
+    if (file == NULL)
+    {
+        printf("Error opening file!\n");
+        exit(1);
+    }
+
+    for (int i = 0; i < entryCount; ++i) {
+        AGENDA_ENTRY *entry = entries[i];
+
+        fprintf(file, "%s;%s;%s;%d\n", entry->name, entry->surname, entry->id, entry->age);
+    }
+
+    fclose(file);
+}

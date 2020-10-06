@@ -25,4 +25,6 @@ int ageComparator(const void *p1, const void *p2);
 
 void freeAgendaEntry(AGENDA_ENTRY *entry);
 
+void saveEntriesToFile(AGENDA_ENTRY** entries, unsigned int entryCount);
+
 #endif //AGENDA_AGENDACOMMON_H
