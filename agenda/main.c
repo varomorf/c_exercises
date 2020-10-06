@@ -9,7 +9,7 @@
 #define REMOVE_ENTRY 2
 #define LIST_ALPHABETICALLY 3
 #define LIST_BY_AGE 4
-#define SAVE_TO_FILE 6
+#define SAVE_TO_FILE 5
 #define EXIT 99
 
 int executeForArray();
@@ -72,11 +72,14 @@ int executeForArray() {
     printf("**** ARRAY VERSION ****\n\n");
     ARRAY_AGENDA *agenda = createArrayAgenda(2);
 
-    // pre-made data
-    addEntry(agenda, createAgendaEntry("Alvaro", "Fernández González", "12345678A", 35));
-    addEntry(agenda, createAgendaEntry("Sara", "Zapico Fernández", "12345679A", 33));
-    addEntry(agenda, createAgendaEntry("Pablo", "Bravo", "12345680A", 42));
-    addEntry(agenda, createAgendaEntry("Migui", "The cat", "12345681A", 1));
+    // pre-loaded data
+    AGENDA_ENTRIES_FROM_FILE *entriesFromFile = getEntriesFromFile();
+    for (int i = 0; i < entriesFromFile->entryCount; ++i) {
+        addEntry(agenda, entriesFromFile->entries[i]);
+    }
+
+    free(entriesFromFile->entries);
+    free(entriesFromFile);
 
     int option = getOption();
     while (option != EXIT) {
@@ -111,11 +114,14 @@ int executeForList() {
     printf("**** LINKED LIST VERSION ****\n\n");
     LIST_AGENDA *agenda = createLinkedListAgenda();
 
-    // pre-made data
-    addListEntry(agenda, createAgendaEntry("Alvaro", "Fernández González", "12345678A", 35));
-    addListEntry(agenda, createAgendaEntry("Sara", "Zapico Fernández", "12345679A", 33));
-    addListEntry(agenda, createAgendaEntry("Pablo", "Bravo", "12345680A", 42));
-    addListEntry(agenda, createAgendaEntry("Migui", "The cat", "12345681A", 1));
+    // pre-loaded data
+    AGENDA_ENTRIES_FROM_FILE *entriesFromFile = getEntriesFromFile();
+    for (int i = 0; i < entriesFromFile->entryCount; ++i) {
+        addListEntry(agenda, entriesFromFile->entries[i]);
+    }
+
+    free(entriesFromFile->entries);
+    free(entriesFromFile);
 
     int option = getOption();
     while (option != EXIT) {
@@ -150,11 +156,14 @@ int executeForTree() {
     printf("**** TREE VERSION ****\n\n");
     TREE_AGENDA *agenda = createTreeAgenda();
 
-    // pre-made data
-    addTreeEntry(agenda, createAgendaEntry("Alvaro", "Fernández González", "12345678A", 35));
-    addTreeEntry(agenda, createAgendaEntry("Sara", "Zapico Fernández", "12345679A", 33));
-    addTreeEntry(agenda, createAgendaEntry("Pablo", "Bravo", "12345680A", 42));
-    addTreeEntry(agenda, createAgendaEntry("Migui", "The cat", "12345681A", 1));
+    // pre-loaded data
+    AGENDA_ENTRIES_FROM_FILE *entriesFromFile = getEntriesFromFile();
+    for (int i = 0; i < entriesFromFile->entryCount; ++i) {
+        addTreeEntry(agenda, entriesFromFile->entries[i]);
+    }
+
+    free(entriesFromFile->entries);
+    free(entriesFromFile);
 
     int option = getOption();
     while (option != EXIT) {

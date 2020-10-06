@@ -12,6 +12,11 @@ typedef struct AgendaEntry {
     unsigned short age;
 } AGENDA_ENTRY;
 
+typedef struct AgendaEntriesFromFile {
+    AGENDA_ENTRY **entries;
+    unsigned int entryCount;
+} AGENDA_ENTRIES_FROM_FILE;
+
 void printEntry(AGENDA_ENTRY *entry, unsigned int pos);
 
 AGENDA_ENTRY* createAgendaEntry(char *name, char *surname, char *id, unsigned short age);
@@ -26,5 +31,6 @@ int ageComparator(const void *p1, const void *p2);
 void freeAgendaEntry(AGENDA_ENTRY *entry);
 
 void saveEntriesToFile(AGENDA_ENTRY** entries, unsigned int entryCount);
+AGENDA_ENTRIES_FROM_FILE *getEntriesFromFile();
 
 #endif //AGENDA_AGENDACOMMON_H

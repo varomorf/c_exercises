@@ -104,3 +104,40 @@ void saveEntriesToFile(AGENDA_ENTRY **entries, unsigned int entryCount) {
 
     fclose(file);
 }
+
+AGENDA_ENTRIES_FROM_FILE *getEntriesFromFile() {
+    AGENDA_ENTRY **entries = (AGENDA_ENTRY**) malloc(sizeof(AGENDA_ENTRY*));
+    FILE * file;
+    char * line = NULL;
+    size_t len = 0;
+    ssize_t read;
+
+    file = fopen("./data.csv", "r");
+    if (file == NULL)
+        exit(1);
+
+    int entryCount = 0;
+    while (getline(&line, &len, file) != -1) {
+        char name[500];
+        char surname[500];
+        char id[500];
+        int age;
+        sscanf(line, "%[^;];%[^;];%[^;];%d", name, surname, id, &age);
+
+        entryCount++;
+        entries = realloc(entries, entryCount * sizeof(AGENDA_ENTRY*));
+
+        entries[entryCount - 1] = createAgendaEntry(name, surname, id, age);
+
+    }
+
+    fclose(file);
+    free(line);
+
+    AGENDA_ENTRIES_FROM_FILE *ret = (AGENDA_ENTRIES_FROM_FILE*) malloc(sizeof(AGENDA_ENTRIES_FROM_FILE));
+
+    ret->entries = entries;
+    ret->entryCount = entryCount;
+
+    return ret;
+}
