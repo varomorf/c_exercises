@@ -9,7 +9,8 @@
 #define REMOVE_ENTRY 2
 #define LIST_ALPHABETICALLY 3
 #define LIST_BY_AGE 4
-#define EXIT 5
+#define SAVE_TO_FILE 6
+#define EXIT 99
 
 int executeForArray();
 
@@ -28,6 +29,12 @@ void removeEntryFromArrayAgenda(ARRAY_AGENDA *agenda);
 void removeEntryFromListAgenda(LIST_AGENDA *agenda);
 
 void removeEntryFromTreeAgenda(TREE_AGENDA *agenda);
+
+void saveArrayAgendaToFile(ARRAY_AGENDA *agenda);
+
+void saveListAgendaToFile(LIST_AGENDA *agenda);
+
+void saveTreeAgendaToFile(TREE_AGENDA *agenda);
 
 /*
  * A ver q casi me pasa, que te parece facer en C un programilla de agenda.
@@ -86,6 +93,9 @@ int executeForArray() {
             case LIST_BY_AGE:
                 listAgendaByAge(agenda);
                 break;
+            case SAVE_TO_FILE:
+                saveArrayAgendaToFile(agenda);
+                break;
             default:
                 printf("Wrong option");
                 return 1;
@@ -121,6 +131,9 @@ int executeForList() {
                 break;
             case LIST_BY_AGE:
                 listListAgendaByAge(agenda);
+                break;
+            case SAVE_TO_FILE:
+                saveListAgendaToFile(agenda);
                 break;
             default:
                 printf("Wrong option");
@@ -158,6 +171,9 @@ int executeForTree() {
             case LIST_BY_AGE:
                 listTreeAgendaByAge(agenda);
                 break;
+            case SAVE_TO_FILE:
+                saveTreeAgendaToFile(agenda);
+                break;
             default:
                 printf("Wrong option");
                 return 1;
@@ -193,6 +209,8 @@ int getOption() {
     printf("%d - Remove entry\n", REMOVE_ENTRY);
     printf("%d - List all entries by name\n", LIST_ALPHABETICALLY);
     printf("%d - List all entries by age\n", LIST_BY_AGE);
+    printf("File actions:\n");
+    printf("%d - Save to file:\n", SAVE_TO_FILE);
     printf("\n");
     printf("%d - EXIT\n", EXIT);
 
@@ -224,4 +242,22 @@ char *getFullNameFromUser() {
     printf("Enter full name:\n");
 
     return readStringFromStdin();
+}
+
+void saveArrayAgendaToFile(ARRAY_AGENDA *agenda) {
+    AGENDA_ENTRY **entries = getArrayEntries(agenda);
+    saveEntriesToFile(entries, agenda->entryCount);
+    free(entries);
+}
+
+void saveListAgendaToFile(LIST_AGENDA *agenda) {
+//    AGENDA_ENTRY **entries = getArrayEntries(agenda);
+//    saveEntriesToFile(entries, agenda->size);
+//    free(entries);
+}
+
+void saveTreeAgendaToFile(TREE_AGENDA *agenda) {
+//    AGENDA_ENTRY **entries = getArrayEntries(agenda);
+//    saveEntriesToFile(entries, agenda->size);
+//    free(entries);
 }
