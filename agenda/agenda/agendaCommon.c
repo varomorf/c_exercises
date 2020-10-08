@@ -110,7 +110,6 @@ AGENDA_ENTRIES_FROM_FILE *getEntriesFromFile() {
     FILE * file;
     char * line = NULL;
     size_t len = 0;
-    ssize_t read;
 
     file = fopen("./data.csv", "r");
     if (file == NULL)
